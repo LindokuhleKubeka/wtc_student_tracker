@@ -29,13 +29,10 @@ This WTC Attendance Tracker System is a Python-based project designed to help WT
 
 ### Setup Instructions
 
-1. **Fork the Repository**:
-   - Go to https://github.com/Eleazarovich/wtc_student_tracker on GitHub and click the "Fork" button in the top-right corner of the page. This creates a copy of the repository in your GitHub account.
-
-2. **Clone Your Forked Repository**:
-   - Clone the repository you just forked to your local machine by running:
+2. **Clone this Repository**:
+   - Clone the repository to your local machine by running:
    ```bash
-   git clone https://github.com/yourusername/attendance-tracker.git
+   git clone https://github.com/LindokuhleKubeka/student-tracker
    cd attendance-tracker
 
 3. **Push Changes Back to Your Repository**:
