@@ -1,13 +1,21 @@
 # Student Tracker
-Java application to manage student progress with SQL-based data storage, built with Spring Boot and Javalin.
+Java application to manage student progress with SQL-based data storage, built with Spring Boot and Javalin. Forked from [original repo, e.g., github.com/original-owner/student-tracker], enhanced with Docker, CI/CD, and REST API improvements.
+
+## My Contributions
+- Added Dockerfile for containerization
+- Implemented GitHub Actions for automated builds and testing
+- Enhanced REST API endpoints with Javalin
+- Integrated ORM for efficient database management
 
 ## Features
 - CRUD operations for student records
-- SQL database integration with ORM
-- RESTful API endpoints
+- SQL database integration with ORM (e.g., Hibernate)
+- RESTful API endpoints for student data management
+
+## Architecture
+![Architecture Diagram](student-tracker-diagram.png) <!-- Create with draw.io -->
 
 ## Setup
-```bash
-git clone https://github.com/LindokuhleKubeka/student-tracker
-mvn install
-java -jar target/student-tracker.jar
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/LindokuhleKubeka/student-tracker
