@@ -1,95 +1,112 @@
-# attendance_tracker.py
-
 import os
 from datetime import datetime
 
 # Constants
 DATABASE = "students.txt"
 
-
 def initialize_database():
     """
     Initialize the database file if it does not exist.
-
-    Instructions:
-    - Check if 'students.txt' exists in the project folder.
-    - If it does not exist, create the file and add a header like "ID, Name, Attendance History".
-    - Ensure that this function is called at the start of the program to set up the database.
+    Creates 'students.txt' with a header if it doesn't exist.
     """
-    pass  # TODO: Implement this function to set up the database file if it doesn't exist.
-
+    if not os.path.exists(DATABASE):
+        with open(DATABASE, 'w') as f:
+            f.write("ID, Name, Attendance History\n")
 
 def add_student(student_id, name):
     """
     Add a new student to the database if the ID does not already exist.
-
-    Instructions:
-    - Open 'students.txt' and check if 'student_id' already exists.
-    - If 'student_id' exists, return an error message indicating duplication.
-    - If 'student_id' does not exist, write a new line in the format: 'student_id, name, []'.
-    - Return a success message after adding the student.
+    Returns a success or error message.
     """
-    pass  # TODO: Implement this function to add a student if the ID is unique.
-
+    initialize_database()
+    with open(DATABASE, 'r') as f:
+        lines = f.readlines()
+        for line in lines[1:]:  # Skip header
+            if line.startswith(f"{student_id},"):
+                return f"Error: Student ID {student_id} already exists."
+    
+    with open(DATABASE, 'a') as f:
+        f.write(f"{student_id}, {name}, []\n")
+    return f"Success: Student {name} (ID: {student_id}) added."
 
 def mark_attendance(student_id):
     """
     Mark attendance for a student for today's date.
-
-    Instructions:
-    - Open 'students.txt' and read all lines to locate the student by 'student_id'.
-    - If the student is not found, return an error message.
-    - If found, check if today's date is already in their attendance history.
-    - If today's date is not already marked, append it to their attendance history.
-    - Save the updated data back to 'students.txt' after marking attendance.
-    - Return a message confirming the attendance was marked.
+    Returns a confirmation or error message.
     """
-    pass  # TODO: Implement this function to mark attendance for today if not already marked.
-
+    initialize_database()
+    today = datetime.now().strftime("%Y-%m-%d")
+    lines = []
+    found = False
+    
+    with open(DATABASE, 'r') as f:
+        lines = f.readlines()
+    
+    with open(DATABASE, 'w') as f:
+        f.write(lines[0])  # Write header
+        for line in lines[1:]:
+            if line.startswith(f"{student_id},"):
+                found = True
+                parts = line.strip().split(", ", 2)
+                attendance = eval(parts[2]) if parts[2] else []
+                if today in attendance:
+                    return f"Error: Attendance for {student_id} already marked for {today}."
+                attendance.append(today)
+                f.write(f"{parts[0]}, {parts[1]}, {attendance}\n")
+            else:
+                f.write(line)
+    
+    if not found:
+        return f"Error: Student ID {student_id} not found."
+    return f"Attendance marked for student ID {student_id} on {today}."
 
 def view_attendance(student_id):
     """
     View the attendance history for a specific student.
-
-    Instructions:
-    - Open 'students.txt' and search for the student by 'student_id'.
-    - If the student is not found, return an error message.
-    - If found, return their attendance history in a readable format.
+    Returns the history or an error message.
     """
-    pass  # TODO: Implement this function to view a specific student's attendance history.
-
+    initialize_database()
+    with open(DATABASE, 'r') as f:
+        lines = f.readlines()
+        for line in lines[1:]:  # Skip header
+            if line.startswith(f"{student_id},"):
+                parts = line.strip().split(", ", 2)
+                attendance = eval(parts[2]) if parts[2] else []
+                return f"Attendance for {parts[1]} (ID: {student_id}): {attendance}"
+    return f"Student ID {student_id} not found."
 
 def view_all_attendance():
     """
     View attendance records for all students.
-
-    Instructions:
-    - Open 'students.txt' and read each student's attendance record.
-    - Format each record to display 'student_id', 'name', and 'attendance history'.
-    - Return all attendance records in a readable format.
+    Returns formatted records.
     """
-    pass  # TODO: Implement this function to view all students' attendance history.
-
+    initialize_database()
+    result = "All Attendance Records:\n"
+    with open(DATABASE, 'r') as f:
+        lines = f.readlines()
+        for line in lines[1:]:  # Skip header
+            parts = line.strip().split(", ", 2)
+            attendance = eval(parts[2]) if parts[2] else []
+            result += f"ID: {parts[0]}, Name: {parts[1]}, Attendance: {attendance}\n"
+    return result if len(lines) > 1 else "No students found."
 
 def generate_report():
     """
     Generate a report of attendance counts for each student.
-
-    Instructions:
-    - Open 'students.txt' and read each student's record.
-    - Count the number of attendance entries for each student.
-    - Return a report with 'student_id', 'name', and 'total attendance days'.
+    Returns a formatted report.
     """
-    pass  # TODO: Implement this function to generate an attendance report.
-
+    initialize_database()
+    result = "Attendance Report:\n"
+    with open(DATABASE, 'r') as f:
+        lines = f.readlines()
+        for line in lines[1:]:  # Skip header
+            parts = line.strip().split(", ", 2)
+            attendance = eval(parts[2]) if parts[2] else []
+            result += f"{parts[1]} (ID: {parts[0]}): {len(attendance)} day(s)\n"
+    return result if len(lines) > 1 else "No students found."
 
 if __name__ == "__main__":
-    # Example usage (You may replace this with actual menu-driven code for students to interact with)
-
-    # Initialize the database on program start
     initialize_database()
-
-    # Sample actions (to be replaced with user interaction or testing)
     print("Attendance Tracker")
     print(add_student("001", "Alice Johnson"))
     print(add_student("002", "Bob Smith"))
