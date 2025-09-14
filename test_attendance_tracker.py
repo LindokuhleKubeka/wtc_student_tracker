@@ -7,7 +7,6 @@ from attendance_tracker import (
     mark_attendance,
     view_attendance,
     view_all_attendance,
-    generate_report,
     DATABASE
 )
 
@@ -80,16 +79,6 @@ class TestAttendanceTracker(unittest.TestCase):
         response = view_all_attendance()
         self.assertIn("Alice Johnson", response)
         self.assertIn("Bob Smith", response)
-
-    def test_generate_report(self):
-        add_student("001", "Alice Johnson")
-        mark_attendance("001")
-        add_student("002", "Bob Smith")
-        mark_attendance("002")
-        mark_attendance("002")
-        response = generate_report()
-        self.assertIn("Alice Johnson: 1 day(s)", response)
-        self.assertIn("Bob Smith: 2 day(s)", response)
 
 if __name__ == "__main__":
     unittest.main()

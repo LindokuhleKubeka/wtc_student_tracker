@@ -1,2 +1,4 @@
+flask==3.0.3
+werkzeug==3.0.3
 pytest==7.1.2
 flake8==5.0.4
