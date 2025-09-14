@@ -1,3 +1,3 @@
 ID, Name, Attendance History
-001, Alice Johnson, ['2025-09-14']
 002, Bob Smith, []
+001, Alice Johnson, ['2025-09-14']
