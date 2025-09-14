@@ -1,0 +1,13 @@
+# Student Tracker
+Java application to manage student progress with SQL-based data storage, built with Spring Boot and Javalin.
+
+## Features
+- CRUD operations for student records
+- SQL database integration with ORM
+- RESTful API endpoints
+
+## Setup
+```bash
+git clone https://github.com/LindokuhleKubeka/student-tracker
+mvn install
+java -jar target/student-tracker.jar
